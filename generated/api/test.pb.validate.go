@@ -139,6 +139,28 @@ func (m *TestRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if l := utf8.RuneCountInString(m.GetPhoneNumber()); l < 10 || l > 11 {
+		err := TestRequestValidationError{
+			field:  "PhoneNumber",
+			reason: "value length must be between 10 and 11 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if !_TestRequest_PhoneNumber_Pattern.MatchString(m.GetPhoneNumber()) {
+		err := TestRequestValidationError{
+			field:  "PhoneNumber",
+			reason: "value does not match regex pattern \"^[0-9]{10,11}$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return TestRequestMultiError(errors)
 	}
@@ -215,6 +237,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TestRequestValidationError{}
+
+var _TestRequest_PhoneNumber_Pattern = regexp.MustCompile("^[0-9]{10,11}$")
 
 // Validate checks the field values on TestResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, the first

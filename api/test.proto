@@ -21,6 +21,14 @@ message TestRequest {
   repeated string sub_paths = 4
   [ (google.api.field_behavior) = OPTIONAL, (validate.rules).repeated = {min_items:1, max_items : 5, items : {string : {min_len : 1, max_len : 150}}} ];
   int32 position_number = 5 [ (google.api.field_behavior) = REQUIRED, (validate.rules).int32 = {gte : 1, lte : 50} ];
+  string phone_number = 6 [
+    (google.api.field_behavior) = OPTIONAL,
+    (validate.rules).string = {
+      min_len: 10,
+      max_len: 11,
+      pattern: "^[0-9]{10,11}$"
+    }
+  ];
 }
 
 // Response body

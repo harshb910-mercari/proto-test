@@ -21,11 +21,11 @@ func NewTestServiceServer() pb.TestServiceServer {
 
 // SayHello handles api request and returns a response
 func (s *Server) SayHello(ctx context.Context, req *pb.TestRequest) (*pb.TestResponse, error) {
+	fmt.Println("request is:", req)
 	if err := req.Validate(); err != nil {
 		fmt.Println("failed due to validation error", err)
 		return nil, status.Errorf(codes.InvalidArgument, "Validation failed: %v", err)
 	}
-	fmt.Println("request is:", req)
 
 	name := "Anonymous"
 	if req.Name != nil && req.Name.Value != "" {

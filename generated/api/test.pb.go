@@ -32,6 +32,7 @@ type TestRequest struct {
 	PhotoIds       []string                `protobuf:"bytes,3,rep,name=photo_ids,json=photoIds,proto3" json:"photo_ids,omitempty"`
 	SubPaths       []string                `protobuf:"bytes,4,rep,name=sub_paths,json=subPaths,proto3" json:"sub_paths,omitempty"`
 	PositionNumber int32                   `protobuf:"varint,5,opt,name=position_number,json=positionNumber,proto3" json:"position_number,omitempty"`
+	PhoneNumber    string                  `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -101,6 +102,13 @@ func (x *TestRequest) GetPositionNumber() int32 {
 	return 0
 }
 
+func (x *TestRequest) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
 // Response body
 type TestResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -150,7 +158,7 @@ var File_api_test_proto protoreflect.FileDescriptor
 
 const file_api_test_proto_rawDesc = "" +
 	"\n" +
-	"\x0eapi/test.proto\x12\x03api\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x97\x02\n" +
+	"\x0eapi/test.proto\x12\x03api\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xd8\x02\n" +
 	"\vTestRequest\x12?\n" +
 	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\r\xe0A\x01\xfaB\ar\x05\x10\x03\x18\x96\x01R\x04name\x12,\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\v\xe0A\x02\xfaB\x05r\x03\x98\x01\aR\n" +
@@ -158,7 +166,9 @@ const file_api_test_proto_rawDesc = "" +
 	"\tphoto_ids\x18\x03 \x03(\tB\x10\xe0A\x01\xfaB\n" +
 	"\x92\x01\a\"\x05r\x03\x98\x01\aR\bphotoIds\x123\n" +
 	"\tsub_paths\x18\x04 \x03(\tB\x16\xe0A\x01\xfaB\x10\x92\x01\r\b\x01\x10\x05\"\ar\x05\x10\x01\x18\x96\x01R\bsubPaths\x125\n" +
-	"\x0fposition_number\x18\x05 \x01(\x05B\f\xe0A\x02\xfaB\x06\x1a\x04\x182(\x01R\x0epositionNumber\"(\n" +
+	"\x0fposition_number\x18\x05 \x01(\x05B\f\xe0A\x02\xfaB\x06\x1a\x04\x182(\x01R\x0epositionNumber\x12?\n" +
+	"\fphone_number\x18\x06 \x01(\tB\x1c\xe0A\x01\xfaB\x16r\x14\x10\n" +
+	"\x18\v2\x0e^[0-9]{10,11}$R\vphoneNumber\"(\n" +
 	"\fTestResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2X\n" +
 	"\vTestService\x12I\n" +
