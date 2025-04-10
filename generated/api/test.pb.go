@@ -11,6 +11,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -25,10 +26,14 @@ const (
 
 // Request body
 type TestRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState  `protogen:"open.v1"`
+	Name           *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	BusinessId     string                  `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	PhotoIds       []string                `protobuf:"bytes,3,rep,name=photo_ids,json=photoIds,proto3" json:"photo_ids,omitempty"`
+	SubPaths       []string                `protobuf:"bytes,4,rep,name=sub_paths,json=subPaths,proto3" json:"sub_paths,omitempty"`
+	PositionNumber int32                   `protobuf:"varint,5,opt,name=position_number,json=positionNumber,proto3" json:"position_number,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *TestRequest) Reset() {
@@ -61,11 +66,39 @@ func (*TestRequest) Descriptor() ([]byte, []int) {
 	return file_api_test_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TestRequest) GetName() string {
+func (x *TestRequest) GetName() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Name
 	}
+	return nil
+}
+
+func (x *TestRequest) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
 	return ""
+}
+
+func (x *TestRequest) GetPhotoIds() []string {
+	if x != nil {
+		return x.PhotoIds
+	}
+	return nil
+}
+
+func (x *TestRequest) GetSubPaths() []string {
+	if x != nil {
+		return x.SubPaths
+	}
+	return nil
+}
+
+func (x *TestRequest) GetPositionNumber() int32 {
+	if x != nil {
+		return x.PositionNumber
+	}
+	return 0
 }
 
 // Response body
@@ -117,9 +150,15 @@ var File_api_test_proto protoreflect.FileDescriptor
 
 const file_api_test_proto_rawDesc = "" +
 	"\n" +
-	"\x0eapi/test.proto\x12\x03api\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\"*\n" +
-	"\vTestRequest\x12\x1b\n" +
-	"\x04name\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x02R\x04name\"(\n" +
+	"\x0eapi/test.proto\x12\x03api\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x97\x02\n" +
+	"\vTestRequest\x12?\n" +
+	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\r\xe0A\x01\xfaB\ar\x05\x10\x03\x18\x96\x01R\x04name\x12,\n" +
+	"\vbusiness_id\x18\x02 \x01(\tB\v\xe0A\x02\xfaB\x05r\x03\x98\x01\aR\n" +
+	"businessId\x12-\n" +
+	"\tphoto_ids\x18\x03 \x03(\tB\x10\xe0A\x01\xfaB\n" +
+	"\x92\x01\a\"\x05r\x03\x98\x01\aR\bphotoIds\x123\n" +
+	"\tsub_paths\x18\x04 \x03(\tB\x16\xe0A\x01\xfaB\x10\x92\x01\r\b\x01\x10\x05\"\ar\x05\x10\x01\x18\x96\x01R\bsubPaths\x125\n" +
+	"\x0fposition_number\x18\x05 \x01(\x05B\f\xe0A\x02\xfaB\x06\x1a\x04\x182(\x01R\x0epositionNumber\"(\n" +
 	"\fTestResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage2X\n" +
 	"\vTestService\x12I\n" +
@@ -139,17 +178,19 @@ func file_api_test_proto_rawDescGZIP() []byte {
 
 var file_api_test_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_api_test_proto_goTypes = []any{
-	(*TestRequest)(nil),  // 0: api.TestRequest
-	(*TestResponse)(nil), // 1: api.TestResponse
+	(*TestRequest)(nil),            // 0: api.TestRequest
+	(*TestResponse)(nil),           // 1: api.TestResponse
+	(*wrapperspb.StringValue)(nil), // 2: google.protobuf.StringValue
 }
 var file_api_test_proto_depIdxs = []int32{
-	0, // 0: api.TestService.SayHello:input_type -> api.TestRequest
-	1, // 1: api.TestService.SayHello:output_type -> api.TestResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: api.TestRequest.name:type_name -> google.protobuf.StringValue
+	0, // 1: api.TestService.SayHello:input_type -> api.TestRequest
+	1, // 2: api.TestService.SayHello:output_type -> api.TestResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_api_test_proto_init() }

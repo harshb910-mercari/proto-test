@@ -57,10 +57,81 @@ func (m *TestRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetName()) < 2 {
+	if wrapper := m.GetName(); wrapper != nil {
+
+		if l := utf8.RuneCountInString(wrapper.GetValue()); l < 3 || l > 150 {
+			err := TestRequestValidationError{
+				field:  "Name",
+				reason: "value length must be between 3 and 150 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if utf8.RuneCountInString(m.GetBusinessId()) != 7 {
 		err := TestRequestValidationError{
-			field:  "Name",
-			reason: "value length must be at least 2 runes",
+			field:  "BusinessId",
+			reason: "value length must be 7 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+
+	}
+
+	for idx, item := range m.GetPhotoIds() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) != 7 {
+			err := TestRequestValidationError{
+				field:  fmt.Sprintf("PhotoIds[%v]", idx),
+				reason: "value length must be 7 runes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+
+		}
+
+	}
+
+	if l := len(m.GetSubPaths()); l < 1 || l > 5 {
+		err := TestRequestValidationError{
+			field:  "SubPaths",
+			reason: "value must contain between 1 and 5 items, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	for idx, item := range m.GetSubPaths() {
+		_, _ = idx, item
+
+		if l := utf8.RuneCountInString(item); l < 1 || l > 150 {
+			err := TestRequestValidationError{
+				field:  fmt.Sprintf("SubPaths[%v]", idx),
+				reason: "value length must be between 1 and 150 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if val := m.GetPositionNumber(); val < 1 || val > 50 {
+		err := TestRequestValidationError{
+			field:  "PositionNumber",
+			reason: "value must be inside range [1, 50]",
 		}
 		if !all {
 			return err
