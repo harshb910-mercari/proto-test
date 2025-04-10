@@ -91,28 +91,52 @@ HTTP	localhost:8080
 ### 🎯 Testing API Endpoints
 👉 Testing via gRPC (grpcurl):
 ```
-grpcurl -plaintext -d '{"name":"Mercari"}' localhost:50051 api.TestService/SayHello
+grpcurl -plaintext -d '{
+    "business_id": "1234567",
+    "name": {
+        "value": "Haru"
+    },
+    "phone_number": "12345678901",
+    "photo_ids": [
+        "1234567",
+        "2345678"
+    ],
+    "position_number": 12,
+    "sub_paths": [
+        "nulla commodo dolore ut",
+        "sit ullamco labore",
+        "exercitation esse voluptate"
+    ]
+}' localhost:50051 api.TestService/SayHello
 ```
 Response:
 ```json
 {
-"message": "Hello, Mercari!"
+"message": "Hello, Haru!"
 }
 ```
 
 ### 👉 Testing via HTTP REST (curl):
 
 ```
-curl -X POST \
--H "Content-Type: application/json" \
--d '{"name":"Mercari"}' \
-http://localhost:8080/v1/say_hello
+curl --location 'localhost:8080/v1/say_hello' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Haru",
+    "business_id": "1234567",
+    "photo_ids" : ["1234567", "2345678"],
+    
+    "sub_paths" : ["1", "2", "3", "4", "5"],
+    
+    "position_number": 2,
+    "phone_number" : "12345678901"
+}'
 ```
 
 Response:
 ```json
 {
-"message": "Hello, Mercari!"
+"message": "Hello, Haru!"
 }
 ```
 
@@ -129,9 +153,9 @@ Validation Error Response:
 
 ```json
 {
-"code": 3,
-"message": "invalid TestRequest.Name: value length must be at least 2 runes",
-"details": []
+  "code": 3,
+  "message": "Validation failed: invalid TestRequest.Name: value length must be between 3 and 150 runes, inclusive",
+  "details": []
 }
 ```
 
