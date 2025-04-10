@@ -1,0 +1,10 @@
+# Binaries
+/bin/
+/build/
+
+# IDE files (.vscode, Goland)
+.idea
+.vscode/
+
+# Third-party proto definitions
+third_party/

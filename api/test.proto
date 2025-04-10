@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/harshb910-mercari/proto-test/generated/api";
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+// Request body
+message TestRequest {
+  string name = 1 [(validate.rules).string.min_len = 2];
+}
+
+// Response body
+message TestResponse {
+  string message = 1;
+}
+
+// Service definition with HTTP mapping
+service TestService {
+  rpc SayHello(TestRequest) returns (TestResponse) {
+    option (google.api.http) = {
+      post: "/v1/say_hello"
+      body: "*"
+    };
+  }
+}
