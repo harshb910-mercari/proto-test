@@ -1,20 +1,14 @@
-To setup
-```
-mkdir -p third_party/googleapis
-git clone https://github.com/googleapis/googleapis.git third_party/googleapis
 
-```
-
-# ⭐️ Proto-Test: Simple Example Repo in Go (gRPC + HTTP)
+# Proto-Test (gRPC + HTTP)
 
 A minimal, clean, and ready-to-go example demonstrating how you can quickly set up a simple API server using:
-- 🐹 **Go (Golang)**
-- 📦 **Protocol Buffers (protobuf)**
-- ⚡️ **gRPC**
-- 🌐 **RESTful HTTP via grpc-gateway**
-- 🎯 **Validation using protoc-gen-validate**
+- **Go (Golang)**
+- **Protocol Buffers (protobuf)**
+- **gRPC**
+- **RESTful HTTP via grpc-gateway**
+- **Validation using protoc-gen-validate**
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 proto-test/
@@ -44,9 +38,9 @@ proto-test/
 ```
 
 
-## 🚧 Installation & Setup
+## Installation & Setup
 
-### 🛠 Prerequisites
+### Prerequisites
 
 - `Go` (v1.16 or above) - [install link](https://golang.org/dl/)
 - `protoc` (Protocol compiler) - [install link](https://github.com/protocolbuffers/protobuf/releases)
@@ -62,22 +56,24 @@ go install github.com/envoyproxy/protoc-gen-validate@latest
 export PATH="$PATH:$(go env GOPATH)/bin"
 ```
 
-### 📥 Getting the repository
+### Getting the repository
 ```
 git clone https://github.com/harshb910-mercari/proto-test.git
 cd proto-test
 ```
 
-### 🚀 Generate proto files
+### Generate proto files
 ```
 # First-time setup of third-party dependencies
-mkdir -p third_party && git clone https://github.com/googleapis/googleapis third_party/googleapis
+mkdir -p third_party && 
+git clone https://github.com/googleapis/googleapis third_party/googleapis && 
+git clone https://github.com/envoyproxy/protoc-gen-validate third_party/protoc-gen-validate
 
 # Generate your proto files
 make generate
 ```
 
-### ▶️ Start the Server
+### Start the Server
 To run your server:
 ```
 go run cmd/main.go
@@ -88,7 +84,7 @@ Type	URL
 gRPC	localhost:50051
 HTTP	localhost:8080
 ```
-### 🎯 Testing API Endpoints
+#### Testing API Endpoints
 👉 Testing via gRPC (grpcurl):
 ```
 grpcurl -plaintext -d '{
@@ -116,7 +112,7 @@ Response:
 }
 ```
 
-### 👉 Testing via HTTP REST (curl):
+#### 👉 Testing via HTTP REST (curl):
 
 ```
 curl --location 'localhost:8080/v1/say_hello' \
@@ -140,7 +136,7 @@ Response:
 }
 ```
 
-### ✅ Request Validation Example
+#### Request Validation Example
 Proto schema validation (name must be at least 2 characters):
 
 ```
@@ -159,7 +155,7 @@ Validation Error Response:
 }
 ```
 
-### 🔧 Useful Commands
+### Useful Commands
 ```
 Command           Task
 make generate     Generate protos
